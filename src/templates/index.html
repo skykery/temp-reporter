@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@^3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@^2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.js" integrity="sha512-rwu37NnL8piEGiFhe2c5j4GahN+gFsIn9k/0hkRY44iz0pc81tBNaUN56qF8X4fy+5pgAAgYi2C9FXdetne5sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+  <body>
+    <main class="container">
+      <div id="app">
+      </div>
+      <div>
+        <canvas id="myChart"></canvas>
+      </div>
+    </main>
+  </body>
+</html>
+
+<script>
+var socket = io('http://127.0.0.1:5000');
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!',
+    connected: false,
+    value: '',
+    humidity: [],
+    temperature: [],
+    chart: newChart(),
+  },
+  delimiters: ['[[',']]'],
+})
+
+socket.on('is_alive', (something) => {
+  app.connected = true;
+});
+socket.on('status', function(msg) {
+  console.log(msg);
+    app.value = msg.data;
+    if (app.chart.data.datasets.length == 0)
+    {
+      app.chart.data.datasets.push({
+            data: msg.data.t,
+            label: 'Temperature',
+            borderColor: '#FF0000'
+          })
+      app.chart.data.datasets.push({
+            data: msg.data.h,
+            label: 'Humidity',
+            borderColor: '#36A2EB'
+          })
+     }else{
+        app.chart.data.datasets[0].data = msg.data.t
+        app.chart.data.datasets[1].data = msg.data.h
+     }
+    app.chart.update();
+});
+
+function newChart(){
+return new Chart(document.getElementById('myChart'), {
+            type: 'line',
+            data: {
+              datasets: []
+            },
+            options: {
+              normalized: true,
+              responsive: true,
+              scales: {
+                x: {
+                  type: 'time',
+                },
+              },
+              plugins: {
+                filler: {
+                    propagate: false
+                },
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: 'Cigar cabinet'
+                }
+              }
+            },
+          })
+}
+</script>
