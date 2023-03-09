@@ -1,11 +1,12 @@
 import pickle
 from os import path
+import os
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-MAX_RECORDS = 10
+MAX_RECORDS = os.environ.get('MAX_RECORDS', 10)
 FILE = 'data'
 
 

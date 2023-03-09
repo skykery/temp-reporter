@@ -12,8 +12,9 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'most_secret_key'
 socketio = SocketIO(app)
-app.config['BASIC_AUTH_USERNAME'] = os.environ.get('auth_user', 'admin')
-app.config['BASIC_AUTH_PASSWORD'] = os.environ.get('auth_user', 'admin')
+app.config['BASIC_AUTH_USERNAME'] = os.environ.get('AUTH_USER', 'admin')
+app.config['BASIC_AUTH_PASSWORD'] = os.environ.get('AUTH_PASSWORD', 'admin')
+chart_title = os.environ.get('CHART_TITLE', 'Cigar cabinet')
 basic_auth = BasicAuth(app)
 
 thread = None
@@ -42,7 +43,7 @@ def connect():
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('index.html')
+    return render_template('index.html', title=chart_title)
 
 
 @app.route('/add', methods=['GET'])
