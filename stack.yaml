@@ -3,7 +3,7 @@ services:
   api:
     image: skykery/temp_humidity_reporter:latest
     ports:
-      - "9052:8000"
+      - "9002:5000"
     deploy:
       resources:
         limits:
