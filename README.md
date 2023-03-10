@@ -1,4 +1,5 @@
-Basic project used to report data from an arduino using the DHT22 sensor.
+Basic project used to report data from an NodeMCU using the DHT22 sensor.
+![status page](https://i.ibb.co/TrqQpK9/chart.gif)
 
 ### Env vars
 - AUTH_USER - user for basic auth (default to admin)
