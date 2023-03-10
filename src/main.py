@@ -2,6 +2,7 @@ from threading import Lock
 import os
 from flask import Flask, render_template, request
 from flask_basicauth import BasicAuth
+from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 import logging
 
@@ -10,6 +11,7 @@ from utils import Records
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = 'most_secret_key'
 socketio = SocketIO(app)
 app.config['BASIC_AUTH_USERNAME'] = os.environ.get('AUTH_USER', 'admin')
