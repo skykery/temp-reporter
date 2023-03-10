@@ -1,4 +1,4 @@
-Basic project used to report data from an NodeMCU using the DHT22 sensor.
+Basic project used to report data from a NodeMCU using the DHT22 sensor.
 
 ![chart](https://i.ibb.co/F01j7T3/Screenshot-2023-03-10-at-21-47-07.png)
 
