@@ -1,8 +1,6 @@
-from threading import Lock
 import os
 from flask import Flask, render_template, request
 from flask_basicauth import BasicAuth
-from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 import logging
 
@@ -11,7 +9,6 @@ from utils import Records
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-# CORS(app)
 app.config['SECRET_KEY'] = 'most_secret_key'
 socketio = SocketIO(app)
 app.config['BASIC_AUTH_USERNAME'] = os.environ.get('AUTH_USER', 'admin')
@@ -19,9 +16,6 @@ app.config['BASIC_AUTH_PASSWORD'] = os.environ.get('AUTH_PASSWORD', 'admin')
 chart_title = os.environ.get('CHART_TITLE', 'Cigar cabinet')
 socket_url = os.environ.get('SOCKET_URL', 'http://127.0.0.1:5000')
 basic_auth = BasicAuth(app)
-
-thread = None
-lock = Lock()
 
 
 def get_data():
@@ -31,10 +25,7 @@ def get_data():
 
 
 def background_thread():
-    global thread
-
     socketio.emit('status', {'data': get_data()})
-    thread = None
 
 
 @socketio.event
@@ -53,7 +44,6 @@ def home():
 @basic_auth.required
 def add():
     from datetime import datetime
-    global thread
 
     t, h = request.args.get('t'), request.args.get('h')
     if not (t and h):
@@ -61,9 +51,7 @@ def add():
     now = str(datetime.now().isoformat())
     Records().write(dict(t=t, h=h, date=now)).save()
 
-    with lock:
-        if thread is None:
-            thread = socketio.start_background_task(background_thread)
+    socketio.start_background_task(background_thread)
     return {"ok": True}
 
 
