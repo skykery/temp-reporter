@@ -11,7 +11,7 @@ from utils import Records
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 app.config['SECRET_KEY'] = 'most_secret_key'
 socketio = SocketIO(app)
 app.config['BASIC_AUTH_USERNAME'] = os.environ.get('AUTH_USER', 'admin')
