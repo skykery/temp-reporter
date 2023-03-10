@@ -17,6 +17,7 @@ socketio = SocketIO(app)
 app.config['BASIC_AUTH_USERNAME'] = os.environ.get('AUTH_USER', 'admin')
 app.config['BASIC_AUTH_PASSWORD'] = os.environ.get('AUTH_PASSWORD', 'admin')
 chart_title = os.environ.get('CHART_TITLE', 'Cigar cabinet')
+socket_url = os.environ.get('SOCKET_URL', 'http://127.0.0.1:5000')
 basic_auth = BasicAuth(app)
 
 thread = None
@@ -45,7 +46,7 @@ def connect():
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('index.html', title=chart_title)
+    return render_template('index.html', title=chart_title, socket_url=socket_url)
 
 
 @app.route('/add', methods=['GET'])
