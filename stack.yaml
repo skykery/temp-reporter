@@ -1,7 +1,7 @@
 version: '3'
 services:
   api:
-    image: insert-image-here
+    image: skykery/temp_humidity_reporter:latest
     ports:
       - "9052:8000"
     deploy:
