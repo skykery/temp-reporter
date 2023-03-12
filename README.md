@@ -14,3 +14,6 @@ Run command: `docker run -p 5000:5000 -e AUTH_USER="admin" -e AUTH_PASSWORD="adm
 
 ### Add entries
 GET http://127.0.0.1:5000/add?t=10&h=110
+
+# NodeMcu ESP8266 + DHT22 script
+The script I'm using currently on my NodeMcu ESP8266 + DHT22 sensor: https://github.com/skykery/nodemcu-dht22-script
