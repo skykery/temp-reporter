@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 MAX_RECORDS = os.environ.get('MAX_RECORDS')
-DELETE_ON_STARTUP = os.environ.get('DELETE_ON_STARTUP')
+DELETE_ON_STARTUP = bool(os.environ.get('DELETE_ON_STARTUP', False))
 if isinstance(MAX_RECORDS, str):
     MAX_RECORDS = int(MAX_RECORDS)
 FILE = 'data'
