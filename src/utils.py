@@ -6,7 +6,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-MAX_RECORDS = os.environ.get('MAX_RECORDS', 10)
+MAX_RECORDS = os.environ.get('MAX_RECORDS')
+if isinstance(MAX_RECORDS, str):
+    MAX_RECORDS = int(MAX_RECORDS)
 FILE = 'data'
 
 
