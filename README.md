@@ -1,7 +1,10 @@
-Basic project used to report data from a NodeMCU using the DHT22 sensor.
+## Basic project used to report data from a NodeMCU using the DHT22 sensor.
 
 ![chart](https://i.ibb.co/F01j7T3/Screenshot-2023-03-10-at-21-47-07.png)
+<img align="left" height="350" src="https://pbs.twimg.com/media/Fq7ic9aWcAA9tMP?format=jpg&name=small">
 
+
+Idea and execution: https://twitter.com/alin__alexandru/status/1633851944501407745
 
 ### Env vars
 - AUTH_USER - user for basic auth (default to admin)
